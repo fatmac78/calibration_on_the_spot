@@ -27,8 +27,8 @@ estimation_tolerance = 0.15
 
 def test_fit_cots():
     
-    # Test COTs estimation algorithm for simulated EMCCD output data at two
-    # different gain levels with a Guassian source distribution
+    # Test COTs estimation algorithm for simulated EMCCD output data at three
+    # different gain levels with a Gaussian source distribution
 
     test_gains=[20, 35, 50]
 
@@ -37,11 +37,15 @@ def test_fit_cots():
         emccd_output_data = np.load("./test/data/32x32gaussian_2.4sigma_" \
                                     + str(test_gain) + "gain_20frames.npy")
     
-        gain_estimates, S0_estimates, location_estimates, r_squared_values = \
+        gain_estimates, S0_estimates, location_estimates, r_squared_values, variance = \
             fit_cots(fitframes, pw, initvals, initpix, deltapix, emccd_output_data,
             gain_init, S0_init)
 
         average_gain_estimate = np.mean(gain_estimates)
+
+        print("Gain in test data: "+str(average_gain_estimate)+\
+            'Estimated gain using COTs library: '+str(test_gain))
+
 
         assert average_gain_estimate > test_gain - (test_gain * estimation_tolerance)
         assert average_gain_estimate < test_gain + (test_gain * estimation_tolerance)

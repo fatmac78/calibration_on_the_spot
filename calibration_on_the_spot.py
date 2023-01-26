@@ -51,7 +51,6 @@ class ChiSquare:
         self.a=a   # pixel width in nm
         self.npix=shape(counts)[0]   #number of pixels each side
         self.posvec=arange(-(self.npix-1.0)/2.0,(self.npix)/2.0,1.0)*a
-        #print(self.posvec)
 
     def Value(self,x):
 
@@ -149,9 +148,6 @@ class CotsFIT:
         # Extract pixel array around initial pixel
         counts=counts[ypix-deltapix:ypix+deltapix,xpix-deltapix:xpix+deltapix]
 
-        #initvals = pylab.array([mux_init,muy_init,sigma_init,N_init,b_init])
-
-
         # Transformation of initial values
         pinit=zeros(5)
         pinit[0:2]=self.initvals[0:2]
@@ -159,8 +155,6 @@ class CotsFIT:
         pinit[3]=sqrt(self.initvals[3])
         pinit[4]=sqrt(self.initvals[4])
         
-        #print ('\nLocalization, frame number:'+str( self.frame))
-
         # Create instance of ChiSquare object
         cs=ChiSquare(counts,self.pw)
 
@@ -207,13 +201,10 @@ class CotsFIT:
 
                 if abs(self.muy/self.pw)<1.0 and abs(self.mux/self.pw)<1.0:
                     notfitted=False
-                 #   print("Fitted")
-                   # print(self.initpix)
-
+  
                     self.locest[nframe,:]=append(frame,self.est)
                     self.r_squared_array[nframe]=self.r_squared
-                  #  print(self.est)
-
+  
                 else:
                     print("Correcting initial pixel")
                     tracking_counter = tracking_counter + 1
@@ -372,7 +363,6 @@ class CotsFIT:
         # Perform COTS for each frame
         for nframe in range(len(self.fitframes)):
             
-            #print("\nCalibration, frame number:"+str(self.fitframes[nframe])+"\n")
             S=self.counts[nframe*npixsq:(nframe+1)*npixsq]
             E=self.expectedcounts[nframe*npixsq:(nframe+1)*npixsq]
             
