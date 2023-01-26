@@ -24,7 +24,7 @@ This requires python 3.6 +
 ```shell script
 git clone https://github.com/fatmac78/calibration_on_the_spot.git
 cd calibration_on_the_spot
-pip install .
+pip install -r requirements.txt
 ```
 
 ## Usage
