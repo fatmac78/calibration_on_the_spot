@@ -8,7 +8,7 @@ included in the article [“Calibration-on-the-spot”: How to calibrate an EMCC
 
 ## Modifications
 
-The original code has several small changes.  More value are returned, the code now works with Python 3.X, and the test case has been updated
+The is includes several small chnages to the original: More values are returned, the code now works with Python 3.X, and the test case has been updated
 
 
 ## License
