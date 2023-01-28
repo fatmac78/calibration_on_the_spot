@@ -1,6 +1,5 @@
 # Supplementary Software 
 #
-# for 
 #
 # "Calibration-on-the-spot": How to calibrate an EMCCD camera from its images
 #
@@ -125,14 +124,10 @@ class CotsFIT:
         self.r_squared=0
         self.r_squared_array=zeros(len(fitframes))
 
-
-
-
     def SetFrame(self,frame):
         """ Sets the current frame number."""
         self.frame=frame
-        
-        
+                
     def Estimate(self,frame=None):
         """ Localizes using GME."""
 
@@ -190,12 +185,10 @@ class CotsFIT:
         # Loop over relevant frames
         for nframe in range(len(self.fitframes)):
             frame=self.fitframes[nframe]
-            print(nframe)
 
             notfitted=True
             tracking_counter = 0
             while notfitted:
-                print('in while')
                 self.SetFrame(frame)
                 self.Estimate(frame)
 
@@ -212,15 +205,12 @@ class CotsFIT:
                     if(tracking_counter == 20):
                         notfitted=False
 
-
                     # If estimated position outside bounds of center pixel, shift center pixel in that direction
 
                     self.initpix+=array([int(round(self.muy/self.pw)),int(round(self.mux/self.pw))])
-                    print(self.initpix)
+                    print("Updated initial pixel: "+str(self.initpix))
 
         return
-
-
 
     def Signals(self):
         """ Calculates the fitted expected pixel output-signals."""
@@ -474,8 +464,8 @@ class CotsFIT:
         GS0pav_covar=mean(self.covarGS0p)/nframes
         S0av_var=(S0pav/Gav**2)**2*Gav_var+(1.0/Gav)**2*S0pav_var-2*(S0pav/Gav**2)*(1.0/Gav)*GS0pav_covar
         
-        print ('\nAverage gain = '+str(Gav)+ '+/-'+str( sqrt(Gav_var)))
-        print ('Average offset = '+str(S0pav/Gav)+ '+/-'+str( sqrt(S0av_var))+"\n")
+        print ('Average estimated gain = '+str(Gav)+ '+/-'+str( sqrt(Gav_var)))
+        print ('Average estimated offset = '+str(S0pav/Gav)+ '+/-'+str( sqrt(S0av_var)))
                         
         return self.Gest-self.deltaG, self.S0pest-self.deltaS0p, self.locest, self.r_squared_array, self.varG
     
